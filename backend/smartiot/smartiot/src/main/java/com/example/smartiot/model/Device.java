@@ -25,5 +25,6 @@ public class Device {
     @Column(name = "device_model")
     private String deviceModel;
 
-
+    @Column(name = "active")
+    private boolean active = true; //aktif mi değil mi kontrolü
 }
