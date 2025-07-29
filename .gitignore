@@ -1,0 +1,56 @@
+# === Genel Ayarlar ===
+HELP.md
+*.log
+
+# === Maven / Java Build Output ===
+target/
+*.class
+
+# === IntelliJ IDEA ===
+.idea/
+*.iml
+
+# === Eclipse / STS ===
+.project
+.classpath
+.settings/
+.springBeans
+.sts4-cache
+.apt_generated
+
+# === NetBeans ===
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+# === Visual Studio Code ===
+.vscode/
+
+# === Spring Boot ===
+.env
+application.properties
+application.yml
+
+# === Node / React (frontend) ===
+node_modules/
+frontend/build/
+frontend/dist/
+
+# === Backend Build ===
+backend/target/
+backend/build/
+
+# === System Files ===
+.DS_Store
+Thumbs.db
+
+# === Arduino (optional) ===
+*.hex
+*.elf
+*.bin
+
+# === MQTT Config (optional) ===
+mqtt-config/*.db
