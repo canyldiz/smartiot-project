@@ -103,11 +103,13 @@ npm start
 
 ## 👨‍💻 Geliştirici
 
-**Can Yıldız**  
+**Can Yıldız**
+
 📧 canylddz0@gmail.com  
 🔗 GitHub: [github.com/canyldiz](https://github.com/canyldiz)
 
 **Mustafa Çetin**
+
 📧 mc.cetin.mustafa@gmail.com  
 🔗 GitHub: [github.com/mustafacetin19](https://github.com/mustafacetin19)
    
