@@ -105,7 +105,7 @@ npm start
 
 **Can Yıldız**  
 📧 canylddz0@gmail.com  
-🔗 GitHub: [github.com/CanYildiz](https://github.com/CanYildiz)
+🔗 GitHub: [github.com/canyldiz](https://github.com/canyldiz)
 
 ---
 
