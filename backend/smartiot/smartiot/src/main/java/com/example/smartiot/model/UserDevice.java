@@ -29,5 +29,6 @@ public class UserDevice {
     @Column(name = "assigned_name")
     private String assignedName;
 
-
+    @Column(name = "active")
+    private boolean active = true;  //Kullanıcının cihazla olan ilişkisi aktif mi?
 }
