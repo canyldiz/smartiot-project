@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -21,4 +22,7 @@ public class User {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "active")
+    private boolean active;  // true = aktif kullanıcı, false = pasif kullanıcı
 }
