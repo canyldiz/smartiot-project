@@ -23,6 +23,9 @@ public class UserController {
             return ResponseEntity.status(400).body("E-mail is already in use");
         }
 
+        /*Yeni kullanıcılar varsayılan olarak aktif olacak/ilerleyen zamanda ise
+        verify yapılacak ona göre aktiflik verilecek.*/
+        user.setActive(true);
         User savedUser = userService.register(user);
         return ResponseEntity.ok(savedUser);
     }
@@ -34,7 +37,7 @@ public class UserController {
         if (found.isPresent()) {
             return ResponseEntity.ok(found.get());
         } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
+            return ResponseEntity.status(401).body("Invalid credentials or inactive account");
         }
     }
 }
