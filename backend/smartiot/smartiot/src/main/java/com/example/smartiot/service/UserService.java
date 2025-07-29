@@ -14,15 +14,35 @@ public class UserService {
     private UserRepository userRepository;
 
     public User register(User user) {
+        user.setActive(true); // Yeni kullanıcı aktif olarak kaydedilir
         return userRepository.save(user);
     }
 
     public Optional<User> login(String email, String password) {
         Optional<User> user = userRepository.findByEmail(email);
-        return user.filter(u -> u.getPassword().equals(password));
+
+        return user.filter(u ->
+                u.isActive() && u.getPassword().equals(password)
+        );
     }
 
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public void deactivateUser(int userId) {
+        Optional<User> user = userRepository.findById(userId);
+        user.ifPresent(u -> {
+            u.setActive(false);
+            userRepository.save(u);
+        });
+    }
+
+    public void activateUser(int userId) {
+        Optional<User> user = userRepository.findById(userId);
+        user.ifPresent(u -> {
+            u.setActive(true);
+            userRepository.save(u);
+        });
     }
 }
