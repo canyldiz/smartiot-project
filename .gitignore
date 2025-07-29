@@ -31,7 +31,6 @@ target/
 
 # === Spring Boot ===
 .env
-application.properties
 application.yml
 
 # === Node / React (frontend) ===
