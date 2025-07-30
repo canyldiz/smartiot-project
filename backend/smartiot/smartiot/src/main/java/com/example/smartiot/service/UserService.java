@@ -30,7 +30,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void deactivateUser(int userId) {
+    public void deactivateUser(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         user.ifPresent(u -> {
             u.setActive(false);
@@ -38,11 +38,16 @@ public class UserService {
         });
     }
 
-    public void activateUser(int userId) {
+    public void activateUser(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         user.ifPresent(u -> {
             u.setActive(true);
             userRepository.save(u);
         });
+    }
+
+    // ✅ Kullanıcıyı ID ile getir
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 }

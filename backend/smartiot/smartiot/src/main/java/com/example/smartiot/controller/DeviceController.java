@@ -23,7 +23,7 @@ public class DeviceController {
         this.mqttPublisher = mqttPublisher;
     }
 
-    //Servo1 Toggle (0° ↔ 90°)
+    // ✅ Servo 1 Toggle (0° ↔ 90°)
     @PostMapping("/control/servo1")
     public void toggleServo1() {
         sensorDataService.setServo1Open(!sensorDataService.isServo1Open());
@@ -31,7 +31,7 @@ public class DeviceController {
                 (sensorDataService.isServo1Open() ? "90 derece" : "0 derece"));
     }
 
-    //Servo2 Toggle (0° ↔ 90°)
+    // ✅ Servo 2 Toggle (0° ↔ 90°)
     @PostMapping("/control/servo2")
     public void toggleServo2() {
         sensorDataService.setServo2Open(!sensorDataService.isServo2Open());
@@ -39,14 +39,14 @@ public class DeviceController {
                 (sensorDataService.isServo2Open() ? "90 derece" : "0 derece"));
     }
 
-    //Genel LED Aç/Kapat Toggle (true/false)
+    // ✅ Genel LED Toggle
     @PostMapping("/control/led")
     public void toggleLed() {
         sensorDataService.setLedOn(!sensorDataService.isLedOn());
         System.out.println("LED durumu: " + (sensorDataService.isLedOn() ? "AÇIK" : "KAPALI"));
     }
 
-    //Renkli LED Aç/Kapat (MQTT ile)
+    // ✅ Renkli LED Aç/Kapat (MQTT ile)
     @PostMapping("/led/toggle")
     public String toggleLed(@RequestParam String color, @RequestParam boolean state) {
         String command = color.toLowerCase() + (state ? "_on" : "_off");
@@ -54,7 +54,7 @@ public class DeviceController {
         return "💡 LED komutu gönderildi: " + command;
     }
 
-    //Servo belirli açıya döndür
+    // ✅ Servo belirli açıya döndür
     @PostMapping("/servo-control")
     public String controlServo(@RequestBody ServoCommand command) {
         String message = command.getServo() + ":" + command.getAngle();
@@ -62,14 +62,14 @@ public class DeviceController {
         return "⚙️ Servo komutu gönderildi: " + message;
     }
 
-    //Buzzer Beep
+    // ✅ Buzzer Beep
     @PostMapping("/buzzer/beep")
     public String beepBuzzer() {
         mqttPublisher.publishMessage("iot/control/buzzer", "on");
         return "🔔 Buzzer komutu gönderildi.";
     }
 
-    //Sıcaklık / Nem güncelle (manuel alternatif)
+    // ✅ Sıcaklık / Nem güncelle (manuel)
     @PostMapping("/sensor")
     public void updateSensorData(@RequestParam float temp, @RequestParam float hum) {
         sensorDataService.setTemperature(temp);
@@ -77,14 +77,14 @@ public class DeviceController {
         System.out.println("🌡 Sıcaklık: " + temp + " °C | 💧 Nem: " + hum + " %");
     }
 
-    //RFID kart ID güncelle
+    // ✅ RFID kart ID güncelle
     @PostMapping("/rfid")
     public void updateCard(@RequestParam String cardId) {
         sensorDataService.setLastUid(cardId);
         System.out.println("📛 Yeni kart okundu ➜ " + cardId);
     }
 
-    //Arayüz için tüm durumları çek
+    // ✅ Arayüz için tüm durumları çek
     @GetMapping("/status")
     public Map<String, Object> getStatus() {
         Map<String, Object> status = new HashMap<>();
