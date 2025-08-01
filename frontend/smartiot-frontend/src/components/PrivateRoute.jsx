@@ -1,10 +1,18 @@
+// src/components/PrivateRoute.jsx
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem('user'));
+  const location = useLocation();
 
-  return user ? children : <Navigate to="/login" replace />;
+  if (!user) {
+    // gitmeden önceki sayfayı localStorage'a kaydet
+    localStorage.setItem('redirectAfterLogin', location.pathname);
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 };
 
 export default PrivateRoute;

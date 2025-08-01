@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // Sadece aktif kullanıcıları getir (listeleme ekranı için kullanışlı)
     List<User> findAllByActiveTrue();
+
+
 }

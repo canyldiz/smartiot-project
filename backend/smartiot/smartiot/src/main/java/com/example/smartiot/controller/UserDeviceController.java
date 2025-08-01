@@ -45,4 +45,11 @@ public class UserDeviceController {
     public void deleteUserDevice(@PathVariable Long id) {
         userDeviceService.deleteById(id);
     }
+
+    // Tüm user-device kayıtlarını getir
+    @GetMapping
+    public List<UserDevice> getAllUserDevices() {
+        return userDeviceService.getAllUserDevices();
+    }
+
 }

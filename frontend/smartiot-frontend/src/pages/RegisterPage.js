@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Form.css';
 import circuitBackground from './circuit-bg.png';
 
@@ -11,6 +11,9 @@ function RegisterPage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false); // ✅ mesaj rengi için
+
+  const navigate = useNavigate();
 
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -50,37 +53,51 @@ function RegisterPage() {
 
   const handleRegister = async () => {
     if (!isValidEmail(email)) {
-      setMessage('Please enter a valid email address');
-      setTimeout(() => setMessage(''), 5000);
+      showMessage('Please enter a valid email address', true);
       return;
     }
 
     const passwordError = isStrongPassword(password, email);
     if (passwordError) {
-      setMessage(passwordError);
-      setTimeout(() => setMessage(''), 5000);
+      showMessage(passwordError, true);
       return;
     }
 
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
-      setTimeout(() => setMessage(''), 5000);
+      showMessage('Passwords do not match', true);
       return;
     }
 
     try {
-      await axios.post('http://localhost:8080/api/register', {
+      const registerResponse = await axios.post('http://localhost:8080/api/register', {
         email,
         password,
         firstName,
         lastName,
       });
-      setMessage('Registration successful');
-      setTimeout(() => setMessage(''), 5000);
+
+      // ✅ Kayıt başarılıysa otomatik login:
+      const loginResponse = await axios.post('http://localhost:8080/api/login', {
+        email,
+        password,
+      });
+
+      localStorage.setItem('user', JSON.stringify(loginResponse.data));
+      showMessage('🎉 Registration & login successful! Redirecting...', false);
+      setTimeout(() => navigate('/'), 3000); // Anasayfaya yönlendir
     } catch (error) {
-      setMessage('Registration failed');
-      setTimeout(() => setMessage(''), 5000);
+      if (error.response && error.response.data) {
+        showMessage(`❌ ${error.response.data}`, true);
+      } else {
+        showMessage('❌ Registration failed', true);
+      }
     }
+  };
+
+  const showMessage = (msg, isErr) => {
+    setMessage(msg);
+    setIsError(isErr);
+    setTimeout(() => setMessage(''), 6000);
   };
 
   return (
@@ -90,36 +107,11 @@ function RegisterPage() {
     >
       <div className="form-container">
         <h2>Register</h2>
-        <input
-          type="text"
-          placeholder="First Name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+        <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+        <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
 
         <ul className="password-rules">
           <li>At least 8 characters long</li>
@@ -132,7 +124,11 @@ function RegisterPage() {
 
         <button onClick={handleRegister}>Register</button>
 
-        {message && <div className="error-box">{message}</div>}
+        {message && (
+          <div className={`error-box ${isError ? 'error' : 'success'}`}>
+            {message}
+          </div>
+        )}
 
         <p>
           Already have an account? <Link to="/login">Login</Link>

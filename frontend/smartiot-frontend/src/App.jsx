@@ -7,14 +7,18 @@ import RegisterPage from './pages/RegisterPage';
 import About from './pages/About';
 import Devices from './pages/Devices';
 import DevicePanel from './components/DevicePanel';
+import CustomPanel from './pages/CustomPanel';
+import AddDevicePage from './pages/AddDevicePage';
+import DeviceSelectionPage from './pages/DeviceSelectionPage';
+import UserSettingsPage from './pages/UserSettingsPage'; // ✅ Yeni Eklendi
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import PrivateRoute from './components/PrivateRoute'; // ✅ Koruma bileşeni eklendi
+import PrivateRoute from './components/PrivateRoute';
 
 function AppContent() {
   const location = useLocation();
-  const hideLayoutRoutes = []; // Tüm sayfalarda Navbar ve Footer gösteriliyor
+  const hideLayoutRoutes = [];
 
   const hideLayout = hideLayoutRoutes.includes(location.pathname);
 
@@ -28,15 +32,30 @@ function AppContent() {
         <Route path="/about" element={<About />} />
         <Route path="/devices" element={<Devices />} />
 
-        {/* ✅ Sadece giriş yapılmışsa erişilebilen panel */}
-        <Route
-          path="/panel"
-          element={
-            <PrivateRoute>
-              <DevicePanel />
-            </PrivateRoute>
-          }
-        />
+        {/* 🔓 Herkese Açık Test Panel */}
+        <Route path="/panel" element={<DevicePanel />} />
+
+        {/* 🔒 Giriş Gerektiren Sayfalar */}
+        <Route path="/custom-panel" element={
+          <PrivateRoute>
+            <CustomPanel />
+          </PrivateRoute>
+        } />
+        <Route path="/add-device" element={
+          <PrivateRoute>
+            <AddDevicePage />
+          </PrivateRoute>
+        } />
+        <Route path="/select-device" element={
+          <PrivateRoute>
+            <DeviceSelectionPage />
+          </PrivateRoute>
+        } />
+        <Route path="/user-settings" element={ // ✅ Yeni Ayar Sayfası Rotası
+          <PrivateRoute>
+            <UserSettingsPage />
+          </PrivateRoute>
+        } />
       </Routes>
       {!hideLayout && <Footer />}
     </>

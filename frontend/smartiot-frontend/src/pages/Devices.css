@@ -63,3 +63,14 @@
     transform: translateY(0);
   }
 }
+
+.device-card input {
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #222;
+  color: white;
+}
+

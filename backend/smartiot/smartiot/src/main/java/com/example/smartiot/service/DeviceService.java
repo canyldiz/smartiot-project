@@ -30,6 +30,11 @@ public class DeviceService {
         deviceRepository.deleteById(id);
     }
 
+    public List<Device> getActiveDevices() {
+        return deviceRepository.findByActiveTrue();
+    }
+
+
     public Device updateDeviceStatus(Long id, boolean active) {
         Device device = deviceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cihaz bulunamadı"));

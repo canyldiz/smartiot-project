@@ -35,6 +35,11 @@ public class UserDeviceService {
         userDeviceRepository.deleteById(id);
     }
 
+    public List<UserDevice> getAllUserDevices() {
+        return userDeviceRepository.findAll();
+    }
+
+
     public UserDevice setActiveStatus(Long id, boolean active) {
         UserDevice userDevice = userDeviceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("UserDevice not found"));

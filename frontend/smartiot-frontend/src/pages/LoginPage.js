@@ -19,12 +19,25 @@ function LoginPage() {
 
       if (response.status === 200) {
         localStorage.setItem('user', JSON.stringify(response.data));
-        navigate('/panel');
-      } else {
-        setMessage('Login failed');
+
+        const redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
+        localStorage.removeItem('redirectAfterLogin');
+        navigate(redirectPath);
       }
     } catch (error) {
-      setMessage('Invalid credentials');
+      if (error.response) {
+        if (error.response.status === 403) {
+          setMessage('🚫 Your account is deactivated. Please register again.');
+          setTimeout(() => navigate('/register'), 3000); // 3 sn sonra yönlendir
+        } else if (error.response.status === 401) {
+          setMessage('❌ Invalid email or password.');
+        } else {
+          setMessage('⚠️ Login failed due to server error.');
+        }
+      } else {
+        setMessage('⚠️ Cannot connect to the server.');
+      }
+
       setTimeout(() => setMessage(''), 5000);
     }
   };

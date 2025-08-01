@@ -7,7 +7,7 @@ function Footer() {
     <footer className="footer">
       <p>&copy; 2025 SmartIoT | All rights reserved.</p>
       <p>
-        Developer: <a href="https://github.com/canyildiz01" target="_blank" rel="noopener noreferrer">canyildiz01</a>
+        Developer: <a href="https://github.com/canyldiz" target="_blank" rel="noopener noreferrer">canyldiz</a>
       </p>
     </footer>
   );

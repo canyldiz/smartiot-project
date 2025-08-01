@@ -11,4 +11,7 @@ public interface UserDeviceRepository extends JpaRepository<UserDevice, Long> {
 
     List<UserDevice> findByUserAndActiveTrue(User user);
 
+    List<UserDevice> findByUserId(Long userId);
+
+
 }

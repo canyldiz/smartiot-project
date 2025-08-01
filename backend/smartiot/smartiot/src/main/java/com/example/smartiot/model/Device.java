@@ -26,5 +26,13 @@ public class Device {
     private String deviceModel;
 
     @Column(name = "active")
-    private boolean active = true; //aktif mi değil mi kontrolü
+    private boolean active = true;
+
+    //ID hariç constructor (DeviceDataInitializer için)
+    public Device(String deviceUid, String deviceName, String deviceModel, boolean active) {
+        this.deviceUid = deviceUid;
+        this.deviceName = deviceName;
+        this.deviceModel = deviceModel;
+        this.active = active;
+    }
 }
